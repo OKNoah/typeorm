@@ -180,7 +180,7 @@ describe("query builder > order-by", () => {
                 "post.geog": {
                     distance: origin,
                     order: "ASC",
-                    nulls: "NULLS FIRST"
+                    nulls: "NULLS LAST"
                 }
             })
             .getMany();
@@ -191,7 +191,7 @@ describe("query builder > order-by", () => {
                 "post.geog": {
                     distance: origin,
                     order: "DESC",
-                    nulls: "NULLS FIRST"
+                    nulls: "NULLS LAST"
                 }
             })
             .getMany();
