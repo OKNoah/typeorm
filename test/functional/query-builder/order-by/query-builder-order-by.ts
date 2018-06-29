@@ -135,4 +135,69 @@ describe("query builder > order-by", () => {
         expect(loadedPost2!.num2).to.be.equal(2);
     })));
 
+    it("should be able to order geog", () => Promise.all(connections.map(async connection => {
+
+        const geoJson1 = {
+            type: "Point",
+            coordinates: [
+                139.9341032213472,
+                36.80798008559315
+            ]
+        };
+
+        const geoJson2 = {
+            type: "Point",
+            coordinates: [
+                139.933053,
+                36.805711
+            ]
+        };
+
+        const origin = {
+            type: "Point",
+            coordinates: [
+                139.933227,
+                36.808005
+            ]
+        };
+
+        const post1 = new Post();
+        post1.myOrder = 1;
+        post1.num1 = 10;
+        post1.num2 = 5;
+        post1.geog = geoJson1;
+
+        const post2 = new Post();
+        post2.myOrder = 2;
+        post2.num1 = 10;
+        post2.num2 = 2;
+        post2.geog = geoJson2;
+        await connection.manager.save([post1, post2]);
+
+        const posts1 = await connection.manager
+            .createQueryBuilder(Post, "post")
+            .orderBy({
+                "post.geog": {
+                    distance: origin,
+                    order: "ASC",
+                    nulls: "NULLS FIRST"
+                }
+            })
+            .getMany();
+
+        const posts2 = await connection.manager
+            .createQueryBuilder(Post, "post")
+            .orderBy({
+                "post.geog": {
+                    distance: origin,
+                    order: "DESC",
+                    nulls: "NULLS FIRST"
+                }
+            })
+            .getMany();
+
+        expect(posts1[0].num2).to.be.equal(post1.num2);
+        expect(posts2[0].num2).to.be.equal(post2.num2);
+    })));
+
 });

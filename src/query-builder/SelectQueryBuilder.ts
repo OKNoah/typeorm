@@ -1508,6 +1508,13 @@ export class SelectQueryBuilder<Entity> extends QueryBuilder<Entity> implements 
                         if (typeof orderBys[columnName] === "string") {
                             return this.replacePropertyNames(columnName) + " " + orderBys[columnName];
                         } else {
+                            if (!!(orderBys[columnName] as any).distance) {
+                                const geoJsonString = JSON.stringify((orderBys[columnName] as any).distance);
+
+                                return "ST_Distance(" + this.replacePropertyNames(columnName) + ", ST_GeomFromGeoJSON('" + (geoJsonString as string) + 
+                                "')) " + (orderBys[columnName] as any).order;
+                            }
+
                             return this.replacePropertyNames(columnName) + " " + (orderBys[columnName] as any).order + " " + (orderBys[columnName] as any).nulls;
                         }
                     })
