@@ -1,10 +1,11 @@
 {
   "name": "typeorm-spatial",
   "private": false,
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Data-Mapper ORM for TypeScript, ES7, ES6, ES5. Supports MySQL, PostgreSQL, MariaDB, SQLite, MS SQL Server, Oracle, MongoDB databases.",
   "license": "MIT",
   "readmeFilename": "README.md",
+  "main": "build/compiled/src/index.js",
   "author": {
     "name": "Umed Khudoiberdiev",
     "email": "pleerock.me@gmail.com"
@@ -71,7 +72,7 @@
     "source-map-support": "^0.5.4",
     "sql.js": "^0.5.0",
     "sqlite3": "^4.0.0",
-    "ts-node": "^5.0.0",
+    "ts-node": "^5.0.1",
     "tslint": "^5.9.1",
     "tslint-stylish": "^2.1.0",
     "typescript": "^2.8.1"
